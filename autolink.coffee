@@ -1,4 +1,4 @@
-autoLink = (options...) ->
+export autoLink = (str, options...) ->
   pattern = ///
     (^|[\s\n]|<[A-Za-z]*\/?>) # Capture the beginning of string or line or leading whitespace
     (
@@ -8,7 +8,7 @@ autoLink = (options...) ->
     )
   ///gi
 
-  return @replace(pattern, "$1<a href='$2'>$2</a>") unless options.length > 0
+  return str.replace(pattern, "$1<a href='$2'>$2</a>") unless options.length > 0
 
   option = options[0]
   callback = option["callback"]
@@ -17,10 +17,9 @@ autoLink = (options...) ->
     " #{k}='#{v}'" for k, v of option when k isnt 'callback'
   ).join('')
 
-  @replace pattern, (match, space, url) ->
+  str.replace pattern, (match, space, url) ->
     link = callback?(url) or
       "<a href='#{url}'#{linkAttributes}>#{url}</a>"
 
     "#{space}#{link}"
 
-String.prototype['autoLink'] = autoLink

@@ -8,6 +8,7 @@
     "test": "test"
   },
   "scripts": {
+    "bundle": "coffee --compile --map --transpile autolink.coffee && minify autolink.js --out-file autolink-min.js",
     "test": "open test/suite.html"
   },
   "repository": {
@@ -19,5 +20,11 @@
   "bugs": {
     "url": "https://github.com/bryanwoods/autolink-js/issues"
   },
-  "homepage": "https://github.com/bryanwoods/autolink-js#readme"
+  "homepage": "https://github.com/bryanwoods/autolink-js#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-minify": "^0.2.0",
+    "babel-preset-env": "^1.6.0",
+    "coffeescript": "^2.0.0"
+  }
 }

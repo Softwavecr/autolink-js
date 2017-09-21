@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "autolink.js",
+  "sourceRoot": "",
+  "sources": [
+    "autolink.coffee"
+  ],
+  "names": [],
+  "mappings": ";;;;;AAAA;AAAA,IAAA,AAAO,8BAAW,kBAAA,AAAC,AAAK,KACtB;MAAA;AAAA,YAAA,AAAU;;;;AASV,MAAA,EAA4D,AAAO,AAAC,qDAApE,AAA6E,IAA7E;WAAO,AAAG,IAAH,AAAI,QAAJ,AAAY,SAAnB,AAAO,AAAqB;;AAE5B,AAAS,AAAQ;AACjB,aAAW,AAAO,OAAA;AAElB;QACE;;AAAA,SAAA,KAAA;;UAAuC,MAAO;gBAA9C,WAAA,AAAI,AAAE,WAAN,AAAU,AAAE;AAAZ;AAAA;;AADe,AAEhB,KAFgB,CAAA,AAEf,KAFe,AAEV;aAEP,AAAI,QAAJ,AAAY,SAAS,UAAA,AAAC,OAAD,AAAQ,OAAR,AAAe,KAClC;QAAA;AAAA,6CAAO,SAAU,YAAV,AACL,oBAAA,AAAY,AAAI,YAAhB,AAAmB,AAAe,uBAAlC,AAAqC,AAAI;AAE3C,gBAAA,AAAG,QAJgB,AAInB,AAAW;AAvBG,AAmBhB,GAAA,AAAG",
+  "sourcesContent": [
+    "export autoLink = (str, options...) ->\n  pattern = ///\n    (^|[\\s\\n]|<[A-Za-z]*\\/?>) # Capture the beginning of string or line or leading whitespace\n    (\n      (?:https?|ftp):// # Look for a valid URL protocol (non-captured)\n      [\\-A-Z0-9+\\u0026\\u2019@#/%?=()~_|!:,.;]* # Valid URL characters (any number of times)\n      [\\-A-Z0-9+\\u0026@#/%=~()_|] # String must end in a valid URL character\n    )\n  ///gi\n\n  return str.replace(pattern, \"$1<a href='$2'>$2</a>\") unless options.length > 0\n\n  option = options[0]\n  callback = option[\"callback\"]\n\n  linkAttributes = (\n    \" #{k}='#{v}'\" for k, v of option when k isnt 'callback'\n  ).join('')\n\n  str.replace pattern, (match, space, url) ->\n    link = callback?(url) or\n      \"<a href='#{url}'#{linkAttributes}>#{url}</a>\"\n\n    \"#{space}#{link}\"\n\n"
+  ]
+}

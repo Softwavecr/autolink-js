@@ -17,13 +17,13 @@
           var that = $(this);
           var text = that.html();
 
-          that.html(text.autoLink());
+          that.html(autoLink(text));
         });
 
         var callback = $('li.callback');
 
         $(callback).html(
-          callback.html().autoLink({ callback: function(url){
+          autoLink(callback.html(), { callback: function(url){
             return /\.(gif|png|jpe?g)$/i.test(url) ? '<img src="' + url + '">' : null;
           }})
         );
@@ -31,6 +31,6 @@
         var new_window = $('li.new_window');
 
         $(new_window).html(
-          new_window.html().autoLink({ target: "_blank" })
+          autoLink(new_window.html(), { target: "_blank" })
         );
       });
